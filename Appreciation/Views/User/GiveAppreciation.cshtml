@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "GiveAppreciation";
+
+}
+<link href=@Url.Content("~/Content/css/dataTables.bootstrap.css") rel="stylesheet" />
+<link href=@Url.Content("~/Content/css/sweetalert.css") rel="stylesheet" />
+
+<script src=@Url.Content("~/Content/script/jquery.dataTables.js")></script>
+<script src=@Url.Content("~/Content/script/dataTables.bootstrap.js")></script>
+<script src=@Url.Content("~/Content/script/sweetalert.min.js")></script>
+<script src=@Url.Content("~/Content/script/dataTables.responsive.min.js")></script>
+
+
+
+
+<h2>GiveAppreciation</h2>
+<hr />
+
+<div class="form-group">
+    @*<span class="col-md-2 control-label">Search</span>*@
+    @Html.Label("Search", new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @*<input type="text" id="txtSearchUser" class="form-control" />*@
+        @Html.TextBox("SearchUser", null, new { id = "txtSearchUser", @class = "form-control" })
+    </div>
+</div>
+<br />
+<br />
+<div class="form-group">
+    <div class="col-md-12">
+        <table id="grd-product" class="table table-bordered table-striped"></table>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtSearchUser").keyup(function () {
+            var data = {
+                userName: $(this).val()
+            };
+            debugger
+            $.ajax({
+                type: "GET",
+                url: "/User/GetUserDetail",
+                data: data,
+                cache: false,
+                success: function (json) {
+                    if(json.ErrorMessage == null)
+                    {
+                        var resultData = $.parseJSON(JSON.stringify(json.data));
+
+                        $('#grd-product').DataTable({
+                            "paging": false,
+                            "bDestroy": true,
+                            "searching": false,
+                            "ordering": true,
+                            "info": false,
+                            "aaData": resultData,
+                            "aoColumns": [
+
+                                         {
+                                             "mData": null,
+                                             "sTitle": "User",
+                                             mRender: function (data, type, row) {
+
+                                                 return html = ' <img style="height:200px;width:200px" src="' + data.PhotoUrl + '" /><br><span>' + data.UserName + '</span>';
+                                             }
+                                         },
+                                     {
+                                         "mData": null,
+                                         "sTitle": "Point",
+                                         mRender: function (data, type, row) {
+
+                                             return html = '  <select class="form-control" id="ddlnumber' + data.EmployeeId + '" > <option value="0">0</option>  <option value="1">1</option>'+
+                                                            ' <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> <option value="6">6</option>'+
+                                                            ' <option value="7">7</option>        <option value="8">8</option>        <option value="9">8</option>        <option value="10">10</option>    </select>';
+                                         }
+                                     },
+                                    {
+                                        "mData": null,
+                                        "sTitle": "",
+                                        mRender: function (data, type, row) {
+
+                                            return html = '<button type="button" class="btn btn-sm btn-success" data-toggle="modal" data-target="#modal-product" title="Give Number"  onclick="UpdateData(' + data.EmployeeId + ')">Appriciate</button>';
+                                        }
+                                    }
+                            ],
+                        });
+                    }
+                    else{
+                        swal("error",json.ErrorMessage, "error");
+                    }
+
+                }
+        ,
+                error: function (ex) {
+                    swal("error",ex, "error");
+
+                }
+            });
+
+        });
+
+    });
+
+    function UpdateData(EmployeeId) {
+
+        swal({ title: "Are you sure?", text: "", type: "warning", showCancelButton: true, confirmButtonColor: "#DD6B55", confirmButtonText: "Yes", closeOnConfirm: false }, function () {
+            var data = {
+                FromEmployeeId : @Convert.ToString(Session["EmployeeId"]),
+                ToEmployeeId: EmployeeId,
+                Points: $('#ddlnumber' + EmployeeId).val()
+            };
+            $.ajax({
+                type: "POST",
+                url: "/User/SaveEarnedPoints",
+                data: data,
+                cache: false,
+                success: function (json) {
+                    if(json.ErrorMessage == null)
+                    {
+                        swal("success",json.SuccessMessage, "success");
+                    }
+                    else
+                    {
+                        swal("error",json.ErrorMessage, "error");
+                    }
+                },
+                error: function (ex) {
+                    swal("error",ex, "error");
+                }
+            });
+        });
+    }
+</script>
+

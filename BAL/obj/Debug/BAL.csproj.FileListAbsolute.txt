@@ -1,0 +1,9 @@
+D:\Pradeep\Appreciation\BAL\obj\Debug\BAL.csprojResolveAssemblyReference.cache
+D:\Pradeep\Appreciation\BAL\bin\Debug\BAL.dll
+D:\Pradeep\Appreciation\BAL\bin\Debug\BAL.pdb
+D:\Pradeep\Appreciation\BAL\bin\Debug\DAL.dll
+D:\Pradeep\Appreciation\BAL\bin\Debug\Model.dll
+D:\Pradeep\Appreciation\BAL\bin\Debug\DAL.pdb
+D:\Pradeep\Appreciation\BAL\bin\Debug\Model.pdb
+D:\Pradeep\Appreciation\BAL\obj\Debug\BAL.dll
+D:\Pradeep\Appreciation\BAL\obj\Debug\BAL.pdb
