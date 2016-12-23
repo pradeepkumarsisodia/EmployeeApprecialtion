@@ -86,11 +86,14 @@ namespace Appreciation.Controllers
             if (loginUserId > 0)
             {
                 Session["EmployeeId"] = loginUserId;
-                // return View("GiveAppreciation");
                 return RedirectToAction("GiveAppreciation", "User");
-                // return RedirectToAction("GiveAppreciation", "Account");
             }
-            return View();
+            else
+            {
+                ModelState.AddModelError("", "Invalid login attempt.");
+                return View(model);
+            }
+         //   return View();
         }
 
         //

@@ -194,6 +194,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Koala.jpg" />
+    <Content Include="Images\Pradeep Kumar.png" />
+    <Content Include="Images\sudhanshu.jpg" />
+    <Content Include="Images\Today.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -248,7 +252,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
     <Folder Include="Views\Filter\" />
   </ItemGroup>
   <ItemGroup>

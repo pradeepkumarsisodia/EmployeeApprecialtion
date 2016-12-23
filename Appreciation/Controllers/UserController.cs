@@ -38,6 +38,22 @@ namespace Appreciation.Controllers
             return Json(new {data = objuserData, SuccessMessage = "" } , JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetReport()
+        {
+            List<Model.Report> objreport = null;
+            try
+            {
+                objreport = BAL.UserAppreciationBAL.GetReport(Convert.ToString(Session["EmployeeId"]));
+            }
+            catch (Exception ex)
+            {
+                return Json(new { ErrorMessage = ex.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { data = objreport, SuccessMessage = "" }, JsonRequestBehavior.AllowGet);
+        }
+
+
         [HttpPost]
         public JsonResult SaveEarnedPoints(Model.EarnedPoint objEarnedPoints)
         {

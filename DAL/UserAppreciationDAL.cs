@@ -11,7 +11,8 @@ namespace DAL
 {
     public  class UserAppreciationDAL
     {
-        static string conStr = "server=.;trusted_connection=true;DataBase = Appreciation";
+        //static string conStr = "server=.;trusted_connection=true;DataBase = Appreciation";
+        static string conStr = "server=182.50.133.109;User Id=rhok;pwd=rhok@123;DataBase=RHOK";
 
         public static List<Model.UserDataModel> GetaUserDetail(string userName,string userId)
         {
@@ -48,12 +49,36 @@ namespace DAL
                 cmd.Parameters.Add("@FromEmpId", SqlDbType.VarChar).Value = objEarnedPoints.FromEmployeeId;
                 cmd.Parameters.Add("@ToEmpId", SqlDbType.VarChar).Value = objEarnedPoints.ToEmployeeId;
                 cmd.Parameters.Add("@Points", SqlDbType.VarChar).Value = objEarnedPoints.Points;
+                cmd.Parameters.Add("@Reason", SqlDbType.VarChar).Value = objEarnedPoints.Reason;
 
                 con.Open();
                 return cmd.ExecuteNonQuery();
 
 
             }
+        }
+
+        public static List<Model.Report> GetReport(string employeeId)
+        {
+            DataTable dt;
+            using (SqlConnection con = new SqlConnection(conStr))
+            {
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = con;
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.CommandText = "procGetReprot";
+                cmd.Parameters.Add("@employeeId", SqlDbType.VarChar).Value = employeeId;
+
+                con.Open();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                dt = new DataTable();
+                da.Fill(dt);
+
+            }
+
+            List<Model.Report> reportlist = dt.DataTableToList<Model.Report>();
+            return reportlist;
         }
 
     

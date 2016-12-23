@@ -12,7 +12,8 @@ namespace DAL
 {
     public class Login
     {
-        static string conStr = "server=.;trusted_connection=true;DataBase = Appreciation";
+        //static string conStr = "server=.;trusted_connection=true;DataBase = Appreciation";
+        static string conStr = "server=182.50.133.109;User Id=rhok;pwd=rhok@123;DataBase =RHOK";
 
         public static Int32 loginUser(LoginModel objlogin)
         {

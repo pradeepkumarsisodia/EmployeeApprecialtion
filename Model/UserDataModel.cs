@@ -13,4 +13,12 @@ namespace Model
         public string PhotoUrl { get; set; }
 
     }
+    public class Report 
+    {
+        public string  EmployeeName { get; set; }
+        public string TotalPoints { get; set; }
+        public string TodayPoints { get; set; }
+        public string LastSevenDaysPoints { get; set; }
+        public string LastOneMonthPoint { get; set; }
+    }
 }

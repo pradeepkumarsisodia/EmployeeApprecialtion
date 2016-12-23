@@ -17,5 +17,9 @@ namespace BAL
       {
           return DAL.UserAppreciationDAL.SaveEarnedPoints(objEarnedPoints);
       }
+      public static List<Model.Report> GetReport(string employeeId)
+      {
+          return DAL.UserAppreciationDAL.GetReport(employeeId);
+      }
     }
 }

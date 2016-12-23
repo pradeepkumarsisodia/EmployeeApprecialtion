@@ -9,36 +9,113 @@
 <script src=@Url.Content("~/Content/script/dataTables.bootstrap.js")></script>
 <script src=@Url.Content("~/Content/script/sweetalert.min.js")></script>
 <script src=@Url.Content("~/Content/script/dataTables.responsive.min.js")></script>
+<style>
+    .img-circle {
+        border-radius: 50%;
+        width: 100%;
+    }
 
+    .font-bold {
+        font-weight: bold;
+    }
 
+    div.text {
+        font-size: 25px;
+    }
+</style>
+<style>
+    .image {
+        position: relative;
+        float: left;
+    }
 
-
-<h2>GiveAppreciation</h2>
+    span {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        margin: 0 auto;
+    }
+</style>
+<h3>Your's</h3>
 <hr />
 
-<div class="form-group">
-    @*<span class="col-md-2 control-label">Search</span>*@
-    @Html.Label("Search", new { @class = "col-md-2 control-label" })
-    <div class="col-md-10">
-        @*<input type="text" id="txtSearchUser" class="form-control" />*@
-        @Html.TextBox("SearchUser", null, new { id = "txtSearchUser", @class = "form-control" })
+<div class="row form-group">
+    <div class="col-md-2"></div>
+    <div class="image col-xs-12 col-md-2 text-center">
+        <img class="img-circle" src="~/Images/Today.png" />
+        <div class="text font-bold">
+            <span id="TotalPoints"></span>
+        </div>
+    </div>
+    <div class="image col-xs-12 col-md-2 text-center">
+        <img class="img-circle" src="~/Images/Today.png" />
+        <div class="text font-bold">
+            <span id="TodayPoints"></span>
+        </div>
+    </div>
+    <div class="image col-xs-12 col-md-2 text-center">
+        <img class="img-circle" src="~/Images/Today.png" />
+        <div class="text font-bold">
+            <span id="LastSevenDays"></span>
+        </div>
+    </div>
+    <div class="image col-xs-12 col-md-2 text-center">
+        <img class="img-circle" src="~/Images/Today.png" />
+        <div class="text font-bold">
+            <span id="LastOneMonth"></span>
+        </div>
     </div>
 </div>
-<br />
-<br />
-<div class="form-group">
-    <div class="col-md-12">
-        <table id="grd-product" class="table table-bordered table-striped"></table>
+
+<div class="row">
+    <div class="col-xs-12">
+        <h3>GiveAppreciation</h3>
+        <hr />
+
+        <div class="form-group">
+            @*<span class="col-md-2 control-label">Search</span>*@
+            @Html.Label("Search", new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @*<input type="text" id="txtSearchUser" class="form-control" />*@
+                @Html.TextBox("SearchUser", null, new { id = "txtSearchUser", @class = "form-control" })
+            </div>
+        </div>
+        <br />
+        <div class="form-group">
+            <div class="col-md-12">
+                <table id="grd-product" class="table table-bordered table-striped"></table>
+            </div>
+        </div>
     </div>
 </div>
+
+
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $.ajax({
+            type: "GET",
+            url: "/User/GetReport",
+            data: null,
+            cache: false,
+            success: function (json) {
+                if(json.ErrorMessage == null)
+                {
+                    var resultData = $.parseJSON(JSON.stringify(json.data));
+                    $("#TotalPoints").html("Total <br /> "+resultData[0].TotalPoints);
+                    $("#TodayPoints").html("Today <br /> "+resultData[0].TodayPoints);
+                    $("#LastSevenDays").html("Weekly <br /> "+resultData[0].LastSevenDaysPoints);
+                    $("#LastOneMonth").html("One Month <br /> "+resultData[0].LastOneMonthPoint);
+                }
+            }
+        });
+
         $("#txtSearchUser").keyup(function () {
             var data = {
                 userName: $(this).val()
             };
-            debugger
+           
             $.ajax({
                 type: "GET",
                 url: "/User/GetUserDetail",
@@ -62,18 +139,24 @@
                                              "mData": null,
                                              "sTitle": "User",
                                              mRender: function (data, type, row) {
-
-                                                 return html = ' <img style="height:200px;width:200px" src="' + data.PhotoUrl + '" /><br><span>' + data.UserName + '</span>';
+                                                 return html = ' <img style="height:75px;width:75px" class="img-circle" src="' + data.PhotoUrl + '" /><br><b>' + data.UserName + '</b>';
                                              }
                                          },
                                      {
                                          "mData": null,
                                          "sTitle": "Point",
                                          mRender: function (data, type, row) {
-
                                              return html = '  <select class="form-control" id="ddlnumber' + data.EmployeeId + '" > <option value="0">0</option>  <option value="1">1</option>'+
-                                                            ' <option value="2">2</option> <option value="3">3</option> <option value="4">4</option> <option value="5">5</option> <option value="6">6</option>'+
-                                                            ' <option value="7">7</option>        <option value="8">8</option>        <option value="9">8</option>        <option value="10">10</option>    </select>';
+                                                            ' <option value="2">2</option><option value="3">3</option><option value="4">4</option> <option value="5">5</option> <option value="6">6</option>'+
+                                                            ' <option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option></select>';
+                                         }
+                                     },
+                                     {
+                                         "mData": null,
+                                         "sTitle": "Point",
+                                         mRender: function (data, type, row) {
+
+                                             return html = '<input type="text" id="txtReason' + data.EmployeeId + '" class="form-control" />';
                                          }
                                      },
                                     {
@@ -109,7 +192,8 @@
             var data = {
                 FromEmployeeId : @Convert.ToString(Session["EmployeeId"]),
                 ToEmployeeId: EmployeeId,
-                Points: $('#ddlnumber' + EmployeeId).val()
+                Points: $('#ddlnumber' + EmployeeId).val(),
+                Reason : $('#txtReason' + EmployeeId).val(),
             };
             $.ajax({
                 type: "POST",
