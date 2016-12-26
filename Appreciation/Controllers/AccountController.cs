@@ -93,7 +93,7 @@ namespace Appreciation.Controllers
                 ModelState.AddModelError("", "Invalid login attempt.");
                 return View(model);
             }
-         //   return View();
+            //   return View();
         }
 
         //
@@ -154,40 +154,41 @@ namespace Appreciation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                string fileName = string.Empty;
-                string path = string.Empty;
-                if (Request.Files.Count > 0)
+                if (ModelState.IsValid)
                 {
-                    var file = Request.Files[0];
-
-                    if (file != null && file.ContentLength > 0)
+                    string fileName = string.Empty;
+                    string path = string.Empty;
+                    if (Request.Files.Count > 0)
                     {
-                        fileName = Path.GetFileName(file.FileName);
-                        path = Path.Combine(Server.MapPath("~/Images/"), fileName);
-                        file.SaveAs(path);
+                        var file = Request.Files[0];
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            fileName = Path.GetFileName(file.FileName);
+                            path = Path.Combine(Server.MapPath("~/Images/"), fileName);
+                            file.SaveAs(path);
+                        }
+                    }
+                    Model.RigesterModel objRegisterModel = new Model.RigesterModel();
+                    objRegisterModel.FirstName = model.FirstName;
+                    objRegisterModel.LastName = model.LastName;
+                    objRegisterModel.EmployeeCode = model.EmployeeCode;
+                    objRegisterModel.Email = model.Email;
+                    objRegisterModel.MobileNumber = model.MobileNumber;
+                    objRegisterModel.Password = model.Password;
+                    objRegisterModel.FilePath = "/Images/" + fileName;
+                    Int32 rowEffected = BAL.Login.RegisterUser(objRegisterModel);
+                    if (rowEffected > 0)
+                    {
+                        return RedirectToAction("Index", "Home");
                     }
                 }
-                Model.RigesterModel objRegisterModel = new Model.RigesterModel();
-                objRegisterModel.FirstName = model.FirstName;
-                objRegisterModel.LastName = model.LastName;
-                objRegisterModel.EmployeeCode = model.EmployeeCode;
-                objRegisterModel.Email = model.Email;
-                objRegisterModel.MobileNumber = model.MobileNumber;
-                objRegisterModel.Password = model.Password;
-                objRegisterModel.FilePath = "/Images/"+ fileName;
-
-                Int32 rowEffected = BAL.Login.RegisterUser(objRegisterModel);
-                if (rowEffected > 0)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-
-
             }
-
-            // If we got this far, something failed, redisplay form
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", ex.Message.ToString());
+            }
             return View(model);
         }
 
