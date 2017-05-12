@@ -1,0 +1,29 @@
+.multiselect-native-select .btn-group {
+    width: 100% !important;
+}
+
+.dropdown-toggle::after {
+    float: right;
+    margin-top: 10px;
+}
+
+.multiselect .multiselect-selected-text {
+    float: left !important;
+}
+
+.multiselect-container {
+    overflow: auto;
+    max-height: 250px;
+}
+
+.margin-top-8 {
+    margin-top: 8px;
+}
+
+.multiselect-container label, .multiselect-item li a, a:focus, a:hover {
+    color: #000 !important;
+}
+
+.multiselect-container li a {
+    color: #000 !important;
+}
