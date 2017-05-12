@@ -1,0 +1,39 @@
+<div class="form-group col-md-3">
+                   <label class="control-label">Department Name<span class="spnError">*</span></label>
+                   <div>
+                       <p class="form-control-static">
+                           <select class="form-control" multiple="multiple" id="department" onchange="getReportingManagersByDepartmentId();"></select>
+                       </p>
+                   </div>
+               </div>
+ $('#employeeCode').multiselect({
+       includeSelectAllOption: true,
+       enableFiltering: true,
+       enableCaseInsensitiveFiltering: true,
+       buttonWidth: false,
+       onDropdownHidden: function (event) {
+       }
+});
+function getReportingManagersByDepartmentId() {
+   var departmentIds = (($('#department').val() != null && typeof $('#department').val() != 'undefined' && $('#department').val().length > 0) ? $('#department').val().join(',') : '0');
+   var jsonObject = {
+       departmentIds: departmentIds,
+   };
+   calltoAjax(misApiUrl.getReportingManagersInADepartment, "POST", jsonObject,
+              function (result) {
+                  $('#reportingManager').multiselect("destroy");
+                  $('#reportingManager').empty();
+                  $.each(result, function (index, value) {
+                      $('<option selected>').val(value.EmployeeAbrhs).text(value.Name).appendTo('#reportingManager');
+                  });
+                  getEmployeesAccordingToSelection();
+                  $('#reportingManager').multiselect({
+                      includeSelectAllOption: true,
+                      enableFiltering: true,
+                      enableCaseInsensitiveFiltering: true,
+                      buttonWidth: false,
+                      onDropdownHidden: function (event) {
+                      }
+                  });
+              });
+}
