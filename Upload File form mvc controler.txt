@@ -1,0 +1,142 @@
+ public ActionResult GenrateSuccessExecl(string id, string userName, string fileName)
+        {
+            string sheetName = "Success Data";
+            string filterParam = string.Empty;
+            var sysBulkUploads = IPOS.AdminBLL.BulkUploadBLL.GetBulkUploadSuccessDownload(Convert.ToInt32(id));
+            using (var pck = new ExcelPackage())
+            {
+                ExcelWorksheet ws = pck.Workbook.Worksheets.Add(sheetName);
+                ws.Column(1).Width = 25;
+                ws.Column(1).Style.WrapText.ToString();
+                ws.Column(2).Width = 25;
+                ws.Column(2).Style.WrapText.ToString();
+                ws.Column(3).Width = 30;
+                ws.Column(3).Style.WrapText.ToString();
+                ws.Column(4).Width = 30;
+                ws.Column(4).Style.WrapText.ToString();
+                ws.Column(5).Width = 30;
+                ws.Column(5).Style.WrapText.ToString();
+                ws.Column(6).Width = 15;
+                ws.Column(6).Style.WrapText.ToString();
+                ws.Column(7).Width = 15;
+                ws.Column(7).Style.WrapText.ToString();
+                ws.Column(8).Width = 15;
+                ws.Column(8).Style.WrapText.ToString();
+                ws.Column(9).Width = 15;
+                ws.Column(9).Style.WrapText.ToString();
+                ws.Column(10).Width = 30;
+                ws.Column(10).Style.WrapText.ToString();
+                ws.Column(11).Width = 15;
+                ws.Column(11).Style.WrapText.ToString();
+                ws.Column(12).Width = 15;
+                ws.Column(12).Style.WrapText.ToString();
+                ws.Column(13).Width = 25;
+                ws.Column(13).Style.WrapText.ToString();
+                ws.Column(14).Width = 25;
+                ws.Column(14).Style.WrapText.ToString();
+                ws.Column(15).Width = 15;
+                ws.Column(15).Style.WrapText.ToString();
+                ws.Column(16).Width = 10;
+                ws.Column(16).Style.WrapText.ToString();
+                ws.Column(17).Width = 15;
+                ws.Column(17).Style.WrapText.ToString();
+                ws.Column(18).Width = 15;
+                ws.Column(18).Style.WrapText.ToString();
+                ws.Column(19).Width = 15;
+                ws.Column(19).Style.WrapText.ToString();
+                ws.Column(20).Width = 10;
+                ws.Column(20).Style.WrapText.ToString();
+                ws.Column(21).Width = 10;
+                ws.Column(21).Style.WrapText.ToString();
+                ws.Column(22).Width = 10;
+                ws.Column(22).Style.WrapText.ToString();
+                ws.Column(23).Width = 20;
+                ws.Column(23).Style.WrapText.ToString();
+                ws.Column(24).Width = 20;
+                ws.Column(24).Style.WrapText.ToString();
+                ws.Column(25).Width = 15;
+                ws.Column(25).Style.WrapText.ToString();
+                ws.Column(26).Width = 20;
+                ws.Column(26).Style.WrapText.ToString();
+                ws.Column(27).Width = 20;
+                ws.Column(27).Style.WrapText.ToString();
+                ws.Column(28).Width = 15;
+                ws.Column(28).Style.WrapText.ToString();
+
+                string[] headerText =    { 
+                                              "Policy_Holder_First_Name", "Policy_Holder_Last_Name", "Communication_Address_1", "Communication_Address_2" ,"Communication_Address_3","City","State","PIN","Country","Email_Id","Mobile_No","UID_No","Insured_Person_First_Name","Insured_Person_Last_Name","Relationship",
+                                              "Gender","DOB","Sum_Insured","Payment_Mode","Frequency","Premium","Policy_Term","Reference_Code","Campaign_Code","Agent_Code","Sub_Campaign_Code","Partner_Code","Family_Indicator"
+                                          };
+                for (int i = 1; i <= 28; i++)
+                {
+                    ws.Cells[1, i].Value = headerText[i - 1];
+                    ws.Cells[1, i].Style.Font.Bold = true;
+                    ws.Cells[1, i].Style.Font.Color.SetColor(Color.White);
+                    ws.Cells[1, i].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                    ws.Cells[1, i].Style.Fill.BackgroundColor.SetColor(Color.DarkBlue);
+                    ws.Cells[1, i].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    ws.Cells[1, i].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    ws.Cells[1, i].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    ws.Cells[1, i].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    ws.Cells[1, i].Style.Border.Left.Color.SetColor(Color.LightGray);
+                    ws.Cells[1, i].Style.Border.Right.Color.SetColor(Color.LightGray);
+                    ws.Cells[1, i].Style.Border.Top.Color.SetColor(Color.LightGray);
+                    ws.Cells[1, i].Style.Border.Bottom.Color.SetColor(Color.LightGray); ;
+                }
+
+                int cellCount = 2;
+                if (sysBulkUploads != null && sysBulkUploads.Count > 0)
+                {
+                    foreach (var item in sysBulkUploads)
+                    {
+                        ws.Cells[cellCount, 1].Value = item.Policy_Holder_First_Name;
+                        ws.Cells[cellCount, 2].Value = item.Policy_Holder_Last_Name;
+                        ws.Cells[cellCount, 3].Value = item.Communication_Address_1;
+                        ws.Cells[cellCount, 4].Value = item.Communication_Address_2;
+                        ws.Cells[cellCount, 5].Value = item.Communication_Address_3;
+                        ws.Cells[cellCount, 6].Value = item.City;
+                        ws.Cells[cellCount, 7].Value = item.State;
+                        ws.Cells[cellCount, 8].Value = item.PinCode;
+                        ws.Cells[cellCount, 9].Value = item.Country;
+                        ws.Cells[cellCount, 10].Value = item.Email_Id;
+                        ws.Cells[cellCount, 11].Value = item.Mobile_No;
+                        ws.Cells[cellCount, 12].Value = item.UID_No;
+                        ws.Cells[cellCount, 13].Value = item.Insured_Person_First_Name;
+                        ws.Cells[cellCount, 14].Value = item.Insured_Person_Last_Name;
+                        ws.Cells[cellCount, 15].Value = item.Relationship;
+                        ws.Cells[cellCount, 16].Value = item.Gender;
+                        ws.Cells[cellCount, 17].Value = item.DOB;
+                        ws.Cells[cellCount, 18].Value = item.Sum_Insured;
+                        ws.Cells[cellCount, 19].Value = item.Payment_Mode;
+                        ws.Cells[cellCount, 20].Value = item.Frequency;
+                        ws.Cells[cellCount, 21].Value = item.Premium;
+                        ws.Cells[cellCount, 22].Value = item.Policy_Term;
+                        ws.Cells[cellCount, 23].Value = item.Reference_Code;
+                        ws.Cells[cellCount, 24].Value = item.Campaign_Code;
+                        ws.Cells[cellCount, 25].Value = item.Agent_Code;
+                        ws.Cells[cellCount, 26].Value = item.Sub_Campaign_Code;
+                        ws.Cells[cellCount, 27].Value = item.Partner_Code;
+                        ws.Cells[cellCount, 28].Value = item.Family_Indicator;
+
+                        cellCount++;
+                    }
+                }
+                byte[] fileContents = pck.GetAsByteArray();
+
+                string fileLocation = "~/Content/Download/" + userName + "/";
+                bool exists = System.IO.Directory.Exists(Server.MapPath(fileLocation));
+                if (!exists)
+                {
+                    System.IO.Directory.CreateDirectory(Server.MapPath(fileLocation));
+                }
+                fileLocation = Server.MapPath(fileLocation) + DateTime.Now.ToString("MMddyyyyTHHmmssZ") + "_" + "Success_" + id + "_" + fileName;
+                using (FileStream newFile = new FileStream(fileLocation, FileMode.Create, FileAccess.Write))
+                {
+                    newFile.Write(fileContents, 0, fileContents.Length);
+                }
+                return File(fileContents, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", sheetName + DateTime.Now.Date.ToShortDateString() + ".xlsx");
+
+
+            }
+            //return Json("", JsonRequestBehavior.AllowGet);
+        }
