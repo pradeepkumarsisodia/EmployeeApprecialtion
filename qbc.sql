@@ -1,0 +1,17 @@
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('mtgmodel','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('Ops Cronus','N','Operations guys to read logs');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('SnrMgmt','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('QA','Y','QA for Cronus');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('PROTEUSOPS','Y','TimeSeries Screen access for Proteus Ops');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('OTTI','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('abcg','N','fgdggdg');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('wheel','N','Hello');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('Admin','Y','Cronus Administrators Group');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('Techops','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('fes','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('Ananlytics','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('DELTA-REGRESSION','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('Asset Setup','Y','Asset Setup Team. Has access to "Substitute Cusips" screen only.');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('QUERY_EXECUTOR_ACCESS','Y',null);
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('ETL_DEV','Y','ETL Dev team access to query executor');
+Insert into EXPORT_TABLE (GROUP_ID,IS_ACTIVE,DESCRIPTION) values ('ETL OPS','Y',null);
